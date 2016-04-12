@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('myApp.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
@@ -8,7 +8,14 @@ angular.module('starter.controllers', [])
   // listen for the $ionicView.enter event:
   //$scope.$on('$ionicView.enter', function(e) {
   //});
-
+  $scope.playlists = [
+    { title: 'Reggae', id: 1 },
+    { title: 'Chill', id: 2 },
+    { title: 'Dubstep', id: 3 },
+    { title: 'Indie', id: 4 },
+    { title: 'Rap', id: 5 },
+    { title: 'Cowbell', id: 6 }
+  ];
   // Form data for the login modal
   $scope.loginData = {};
 
@@ -41,16 +48,62 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
-})
+.controller('myStocksCtrl', ['$scope',
+  function($scope) {
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-});
+  $scope.myStocksArray = [
+    {ticker:"TSLA"},
+    {ticker:"GOOG"},
+    {ticker:"FB"},
+    {ticker:"MSFT"},
+    {ticker:"AAPL"},
+    {ticker:"PBR"},
+    {ticker:"PETR4.SA"},
+    {ticker:"VALE5.SA"}
+
+  ];
+}])
+
+.controller('stockCtrl', ['$scope', '$stateParams', 'stockDataServices',
+function($scope, $stateParams, stockDataServices) {
+
+  // // http://finance.yahoo.com/webservice/v1/symbols/GOOG/quote?format=json&view=detail
+  //
+  // $http.get("http://finance.yahoo.com/webservice/v1/symbols/GOOG/quote?format=json&view=detail")
+  //   .then(function(jsonData) {
+  //     console.log(jsonData.data.list.resources[0].resource.fields);
+  //   });
+
+  $scope.ticker = $stateParams.stockTicker;
+  $scope.chartView = 1;
+
+  $scope.$on("$ionicView.afterEnter", function(){
+    getPriceData();
+    getDetailData();
+  });
+
+  $scope.chartViewFunc = function(n) {
+    $scope.chartView = n;
+  };
+
+  function getPriceData(){
+
+    var promise = stockDataServices.getPriceData($scope.ticker);
+
+    promise.then(function(data){
+      console.log(data);
+      $scope.stockPriceData = data;
+    });
+  }
+
+  function getDetailData(){
+
+    var promise = stockDataServices.getDetailData($scope.ticker);
+
+    promise.then(function(data){
+      console.log(data);
+      $scope.stockDetailsData = data;
+    });
+  }
+
+}]);

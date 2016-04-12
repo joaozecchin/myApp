@@ -1,0 +1,115 @@
+<ion-view view-title="{{ticker}}">
+
+<div class="bar bar-subheader bar-light">
+
+  <div class="buttons" side="left">
+    <div class="button button-clear">
+      <h6>{{stockDetailsData.Name}}</h6>
+    </div>
+  </div>
+
+<h2 class="title button-left button-right">{{stockPriceData.Price}}</h2>
+
+  <div class="buttons" side="right">
+    <div class="button button-clear">
+      <h6>{{stockPriceData.chg_percent}}%</h6>
+    </div>
+  </div>
+
+</div>
+
+
+<ion-content class="has-subheader">
+
+<div class="button-bar">
+  <a ng-click="chartViewFunc(1)" ng-class="cartView == 1 ? 'active' : ''" class="button">Day</a>
+  <a ng-click="chartViewFunc(2)" ng-class="cartView == 2 ? 'active' : ''" class="button">Week</a>
+  <a ng-click="chartViewFunc(3)" ng-class="cartView == 3 ? 'active' : ''" class="button">3M</a>
+  <a ng-click="chartViewFunc(4)" ng-class="cartView == 4 ? 'active' : ''" class="button">Year</a>
+  <a ng-click="chartViewFunc(5)" ng-class="cartView == 5 ? 'active' : ''" class="button">Max</a>
+
+</div>
+<img ng-if="chartView == 1" ng-src="http://chart.finance.yahoo.com/z?s={{ticker}}&t=1d&q=l&l=on&z=m&a=vm" style=width="100%">
+<img ng-if="chartView == 2" ng-src="http://chart.finance.yahoo.com/z?s={{ticker}}&t=5d&q=l&l=on&z=m&a=vm" style=width="100%">
+<img ng-if="chartView == 3" ng-src="http://chart.finance.yahoo.com/z?s={{ticker}}&t=3m&q=l&l=on&z=m&a=vm" style=width="100%">
+<img ng-if="chartView == 4" ng-src="http://chart.finance.yahoo.com/z?s={{ticker}}&t=1y&q=l&l=on&z=m&a=vm" style=width="100%">
+<img ng-if="chartView == 5" ng-src="http://chart.finance.yahoo.com/z?s={{ticker}}&t=my&q=l&l=on&z=m&a=vm" style=width="100%">
+
+
+<!-- Market Data -->
+<div class="card">
+  <div class="item item-divider">Market Data</div>
+  <div class="row row-center">
+    <div class="col">Bid: </div>
+    <div class="col">{{stockDetailsData.Bid}}</div>
+    <div class="col">Aks: </div>
+    <div class="col">{{stockDetailsData.Ask}}</div>
+  </div>
+  <div class="row row-center">
+    <div class="col">Vol.: </div>
+    <div class="col">{{stockDetailsData.Volume}}</div>
+    <div class="col">Avg Vol.: </div>
+    <div class="col">{{stockDetailsData.AverageDailyVolume}}</div>
+  </div>
+  <div class="row row-center">
+    <div class="col">Prev. Close: </div>
+    <div class="col">{{stockDetailsData.PreviousClose}}</div>
+    <div class="col">Open: </div>
+    <div class="col">{{stockDetailsData.Open}}</div>
+  </div>
+  <div class="row row-center">
+    <div class="col">Day Low: </div>
+    <div class="col">{{stockDetailsData.DaysLow}}</div>
+    <div class="col">Day High: </div>
+    <div class="col">{{stockDetailsData.DaysHigh}}</div>
+  </div>
+  <div class="row row-center">
+    <div class="col">Year Low: </div>
+    <div class="col">{{stockDetailsData.YearLow}}</div>
+    <div class="col">Year High: </div>
+    <div class="col">{{stockDetailsData.YearHigh}}</div>
+  </div>
+</div>
+
+<!-- Analytics -->
+<div class="card">
+  <div class="item item-divider">Analytical Data</div>
+
+  <div class="row row-center">
+    <div class="col">Mkt Cap: </div>
+    <div class="col">{{stockDetailsData.MarketCapitalization}}</div>
+    <div class="col">EBITDA: </div>
+    <div class="col">{{stockDetailsData.EBITDA}}</div>
+  </div>
+  <div class="row row-center">
+    <div class="col">Book Value: </div>
+    <div class="col">{{stockDetailsData.BookValue}}</div>
+    <div class="col">Price/Book: </div>
+    <div class="col">{{stockDetailsData.PriceBook}}</div>
+  </div>
+  <div class="row row-center">
+    <div class="col">EPS: </div>
+    <div class="col">{{stockDetailsData.EarningsShare}}</div>
+    <div class="col">EPS (est): </div>
+    <div class="col">{{stockDetailsData.EPSEstimateCurrentYear}}</div>
+  </div>
+
+</div>
+
+<div class="card">
+  <div class="item item-divider">Notes</div>
+  <a class="item">
+    <h2>Note Title</h2>
+  </a>
+</div>
+
+<div class="card">
+  <div class="item item-divider">News</div>
+  <a class="item item-icon-right">
+    <h2>News Story Title</h2>
+    <i class="icon ion-ios-arrow-right"></i>
+  </a>
+</div>
+
+  </ion-content>
+</ion-view>
